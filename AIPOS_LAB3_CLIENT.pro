@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += network
 
 TARGET = AIPOS_LAB3_CLIENT
 TEMPLATE = app
@@ -12,11 +12,19 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    tsession.cpp
+    tsession.cpp \
+    tprinter.cpp
 
 HEADERS  += mainwindow.h \
-    tsession.h
+    tsession.h \
+    tprinter.h
 
 FORMS    += mainwindow.ui
+
+
+
+
+
+
 
 

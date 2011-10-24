@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "tsession.h"
+#include "tprinter.h"
 
 namespace Ui {
     class MainWindow;
@@ -17,6 +19,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+
 };
 
 #endif // MAINWINDOW_H
