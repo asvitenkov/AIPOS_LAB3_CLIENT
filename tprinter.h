@@ -3,29 +3,44 @@
 
 #include <QTextEdit>
 #include <QKeyEvent>
+#include <QByteArray>
 
 
 class TPrinter : public QTextEdit
 {
     Q_OBJECT
+    //class QByteArray;
 public:
     explicit TPrinter(QWidget *parent = 0);
 
 signals:
+    void keyReleaseSignal(QKeyEvent *e, QString keyText);
 
 public slots:
-//    void append(const QString &text);
-//    void paste();
-//    void setPlainText(const QString &text);
-//    void setText(const QString &text);
     void keyReleaseEvent(QKeyEvent *e);
     void keyPressEvent(QKeyEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
     void mouseDoubleClickEvent(QMouseEvent *e){}
     void mousePressEvent(QMouseEvent *e){}
     void mouseReleaseEvent(QMouseEvent *e){}
+    void printMessageSlot(QByteArray aMessage);
+    void changePositions(int aX, int aY);
+    void execCMD(QByteArray aCMD);
+    void parseEcsSeq(QByteArray aData);
+
 private slots:
     void textChangedSlot();
+
+
+private:
+
+    int x;
+    int y;
+    int w,h;
+    void printMessage(QByteArray aMessage);
+    void printDisplay();
+
+    QByteArray display;
 
 };
 
