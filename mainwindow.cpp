@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     TSession *session = new TSession(this);
     session->initialization();
-    session->connectToHost(QHostAddress("127.0.0.1"),23,QIODevice::ReadWrite);
+    session->connectToHost(QHostAddress("127.0.0.1"),25,QIODevice::ReadWrite);
     QByteArray answer;
     answer+=255;
     answer+=252;

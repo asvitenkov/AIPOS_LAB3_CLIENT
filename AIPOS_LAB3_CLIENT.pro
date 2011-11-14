@@ -13,18 +13,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     tsession.cpp \
-    tprinter.cpp
+    tprinter.cpp \
+    myprocess.cpp
 
 HEADERS  += mainwindow.h \
     tsession.h \
-    tprinter.h
+    tprinter.h \
+    myprocess.h
 
 FORMS    += mainwindow.ui
-
-
-
-
-
-
-
-

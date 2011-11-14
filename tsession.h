@@ -4,6 +4,7 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 #include <QKeyEvent>
+#include "myprocess.h"
 
 class TSession : public QTcpSocket
 {
@@ -33,7 +34,7 @@ private slots:
 
 
 private:
-    OptionsState optionsState[300];
+    OptionsState optionsState[40];
     void parseMessage(QByteArray aMessage);
     void parseSuboptions(QByteArray aSuboptions);
     void parseOptions(QByteArray aOptions);
@@ -42,6 +43,8 @@ private:
     QByteArray outputData;
     QByteArray terminalType;
     QByteArray& clearData(QByteArray &aData);
+    myProcess *prc;
+    void commandProcessed(QString);
 
 
 };

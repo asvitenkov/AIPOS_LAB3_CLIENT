@@ -12,13 +12,20 @@ void TSession::initialization(){
     lastChar='\0';
     outputData.clear();
     terminalType.clear();
-    memset(optionsState,5,sizeof(optionsState));
-    optionsState[31]=CONST_OFF;
-    optionsState[24]=CONST_ON;
+    memset(optionsState,CONST_OFF,sizeof(optionsState));
+    for(int i=0;i<40;i++) optionsState[i] = CONST_OFF;
+    //optionsState[31]=CONST_OFF;
+    //optionsState[24]=CONST_OFF;
     optionsState[1]=CONST_ON;
     optionsState[3]=CONST_ON;
     connect(this,SIGNAL(readyRead()),this,SLOT(readServer()));
     connect(this,SIGNAL(connected()),this,SLOT(connectToServerSlot()));
+
+
+    prc = new myProcess;
+    prc->startProcess();
+    connect(prc,SIGNAL(output(QString)),this,SLOT(commandProcessed(QString)));
+
 
 }
 
@@ -145,14 +152,14 @@ void TSession::parseOptions(QByteArray aOptions){
         break;
     }
     answer+=option;
-    if(option==31){
-        answer+=255;
-        answer+=WONT;
-        answer+=31;
-        answer+=255;
-        answer+=DONT;
-        answer+=31;
-    }
+//    if(option==31){
+//        answer+=255;
+//        answer+=WONT;
+//        answer+=31;
+//        answer+=255;
+//        answer+=DONT;
+//        answer+=31;
+//    }
     write(answer);
 }
 
@@ -186,4 +193,9 @@ QByteArray& TSession::clearData(QByteArray &aData){
         pos = aData.indexOf(array);
     }
     return aData;
+}
+
+
+void TSession::commandProcessed(QString str){
+    qDebug()<<str;
 }

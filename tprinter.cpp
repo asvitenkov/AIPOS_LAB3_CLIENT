@@ -17,7 +17,7 @@ TPrinter::TPrinter(QWidget *parent) :
     y=1;
     display.resize(w*h+1);
     display.fill(' ');
-    this->setReadOnly(false);
+    this->setReadOnly(true);
 }
 
 void TPrinter::textChangedSlot(){
@@ -28,16 +28,12 @@ void TPrinter::textChangedSlot(){
 void TPrinter::keyReleaseEvent(QKeyEvent *e){
     qDebug()<<"TPrinter::keyReleaseEvent";
     if(e->count()==Qt::Key_Shift) return;
-//    if(e->key()==Qt::Key_Backspace)
-//        this->textCursor().deletePreviousChar();
-//    else
-//        this->textCursor().insertText(e->text());
     emit keyReleaseSignal(e,e->text());
-    //QTextEdit::keyReleaseEvent(e);
+    qDebug()<<e->text();
 }
 
 void TPrinter::keyPressEvent(QKeyEvent *e){
-    qDebug()<<"TPrinter::keyPressEvent";
+    //qDebug()<<"TPrinter::keyPressEvent";
     QTextEdit::keyPressEvent(e);
 }
 
@@ -49,7 +45,8 @@ void TPrinter::mouseMoveEvent(QMouseEvent *e){
 
 void TPrinter::printMessageSlot(QByteArray aMessage){
     qDebug()<<"TPrinter::printMessageSlot";
-    parseEcsSeq(aMessage);
+    this->textCursor().insertText(QString::fromLocal8Bit(aMessage));
+    //parseEcsSeq(aMessage);
 }
 
 
@@ -128,7 +125,7 @@ void TPrinter::printDisplay(){
     int i=0;
     for(i;i<display.size();i++){
         //qDebug()<<QString(*pDisplay[i]);
-        this->textCursor().insertText(QString(display.at(i)));
+        this->textCursor().insertText(QString(QString(display.at(i)).toLocal8Bit()));
         if((i % w)==0){
             this->append("");
         }
