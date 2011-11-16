@@ -16,15 +16,16 @@ void TSession::initialization(){
     for(int i=0;i<40;i++) optionsState[i] = CONST_OFF;
     //optionsState[31]=CONST_OFF;
     //optionsState[24]=CONST_OFF;
-    optionsState[1]=CONST_ON;
+    optionsState[1]=OFF;
     optionsState[3]=CONST_ON;
     connect(this,SIGNAL(readyRead()),this,SLOT(readServer()));
     connect(this,SIGNAL(connected()),this,SLOT(connectToServerSlot()));
 
 
-    prc = new myProcess;
-    prc->startProcess();
-    connect(prc,SIGNAL(output(QString)),this,SLOT(commandProcessed(QString)));
+    //prc = new myProcess;
+    //prc->startProcess();
+    //prc->runCommand();
+    //connect(prc,SIGNAL(output(QString)),this,SLOT(commandProcessed(QString)));
 
 
 }
@@ -50,6 +51,12 @@ void TSession::parseMessage(QByteArray aMessage){
     if(aMessage.isEmpty()) return;
     QString str(aMessage);
     QByteArray answer;
+    QByteArray backspace;
+    backspace+=27; backspace+=91; backspace+=49; backspace+=68; backspace+=27; backspace+=91; backspace+=80;
+    if(aMessage.indexOf(backspace)!=-1){
+        aMessage.replace(backspace,QByteArray());
+        emit deleteChar();
+    }
     int pos=aMessage.indexOf((char)IAC);
     while(pos!=-1){
         // всё что до 255 записываем на принтер
@@ -166,34 +173,35 @@ void TSession::parseOptions(QByteArray aOptions){
 
 void TSession::keyPressedOnKeyboard(QKeyEvent *e, QString keyText){
     qDebug()<<"TSession::keyPressedOnKeyboard";
+    if(optionsState[1]==OFF) emit printMessageSignal(keyText.toLocal8Bit());
     write(keyText.toLocal8Bit());
 }
 
 
 
-QByteArray& TSession::clearData(QByteArray &aData){
-    qDebug()<<"TSession::clearData";
-    QByteArray array; array+=27;array+=91;
-    int pos = aData.indexOf(array);
-    while(pos!=-1){
+//QByteArray& TSession::clearData(QByteArray &aData){
+//    qDebug()<<"TSession::clearData";
+//    QByteArray array; array+=27;array+=91;
+//    int pos = aData.indexOf(array);
+//    while(pos!=-1){
 
-        int posEndH=aData.indexOf('H',pos+1);
-        int posEndJ=aData.indexOf('J',pos+1);
-        int posEndM=aData.indexOf('m',pos+1);
-        if (posEndH==-1)posEndH=aData.size()+1;
-        if (posEndJ==-1)posEndJ=aData.size()+1;
-        if (posEndM==-1)posEndM=aData.size()+1;
-        int posEnd = qMin(qMin(posEndH,posEndJ),posEndM);
-        QByteArray escSeq;
-        escSeq= aData.mid(pos+2,posEnd-pos-1);
-        aData.remove(pos,posEnd-pos+1);
+//        int posEndH=aData.indexOf('H',pos+1);
+//        int posEndJ=aData.indexOf('J',pos+1);
+//        int posEndM=aData.indexOf('m',pos+1);
+//        if (posEndH==-1)posEndH=aData.size()+1;
+//        if (posEndJ==-1)posEndJ=aData.size()+1;
+//        if (posEndM==-1)posEndM=aData.size()+1;
+//        int posEnd = qMin(qMin(posEndH,posEndJ),posEndM);
+//        QByteArray escSeq;
+//        escSeq= aData.mid(pos+2,posEnd-pos-1);
+//        aData.remove(pos,posEnd-pos+1);
 
 
-        emit escSeqSignal(escSeq);
-        pos = aData.indexOf(array);
-    }
-    return aData;
-}
+//        emit escSeqSignal(escSeq);
+//        pos = aData.indexOf(array);
+//    }
+//    return aData;
+//}
 
 
 void TSession::commandProcessed(QString str){

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>530</width>
-    <height>344</height>
+    <width>531</width>
+    <height>336</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,14 +35,28 @@
         <item>
          <widget class="QLineEdit" name="serverAdress">
           <property name="text">
-           <string>Антон</string>
+           <string>127.0.0.1</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QSpinBox" name="serverPort">
+          <property name="value">
+           <number>25</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="connectButton">
           <property name="text">
-           <string>PushButton</string>
+           <string>Connect</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="disconnectButton">
+          <property name="text">
+           <string>Disconnect</string>
           </property>
          </widget>
         </item>
@@ -57,7 +71,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>530</width>
+     <width>531</width>
      <height>22</height>
     </rect>
    </property>

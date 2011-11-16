@@ -24,9 +24,7 @@ public slots:
     void mousePressEvent(QMouseEvent *e){}
     void mouseReleaseEvent(QMouseEvent *e){}
     void printMessageSlot(QByteArray aMessage);
-    void changePositions(int aX, int aY);
-    void execCMD(QByteArray aCMD);
-    void parseEcsSeq(QByteArray aData);
+    void deleteChar();
 
 private slots:
     void textChangedSlot();
@@ -34,13 +32,6 @@ private slots:
 
 private:
 
-    int x;
-    int y;
-    int w,h;
-    void printMessage(QByteArray aMessage);
-    void printDisplay();
-
-    QByteArray display;
 
 };
 

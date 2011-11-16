@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sun 23. Oct 10:26:04 2011
+** Created: Wed 16. Nov 23:28:19 2011
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -22,6 +22,7 @@
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
 #include <QtGui/QSpacerItem>
+#include <QtGui/QSpinBox>
 #include <QtGui/QToolBar>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
@@ -36,8 +37,10 @@ public:
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
     QSpacerItem *horizontalSpacer;
-    QLineEdit *lineEdit;
-    QPushButton *pushButton;
+    QLineEdit *serverAdress;
+    QSpinBox *serverPort;
+    QPushButton *connectButton;
+    QPushButton *disconnectButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
 
@@ -45,7 +48,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(530, 344);
+        MainWindow->resize(531, 336);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -62,15 +65,26 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer);
 
-        lineEdit = new QLineEdit(centralWidget);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        serverAdress = new QLineEdit(centralWidget);
+        serverAdress->setObjectName(QString::fromUtf8("serverAdress"));
 
-        horizontalLayout->addWidget(lineEdit);
+        horizontalLayout->addWidget(serverAdress);
 
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        serverPort = new QSpinBox(centralWidget);
+        serverPort->setObjectName(QString::fromUtf8("serverPort"));
+        serverPort->setValue(25);
 
-        horizontalLayout->addWidget(pushButton);
+        horizontalLayout->addWidget(serverPort);
+
+        connectButton = new QPushButton(centralWidget);
+        connectButton->setObjectName(QString::fromUtf8("connectButton"));
+
+        horizontalLayout->addWidget(connectButton);
+
+        disconnectButton = new QPushButton(centralWidget);
+        disconnectButton->setObjectName(QString::fromUtf8("disconnectButton"));
+
+        horizontalLayout->addWidget(disconnectButton);
 
 
         verticalLayout->addLayout(horizontalLayout);
@@ -81,7 +95,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 530, 22));
+        menuBar->setGeometry(QRect(0, 0, 531, 22));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -95,7 +109,9 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("MainWindow", "PushButton", 0, QApplication::UnicodeUTF8));
+        serverAdress->setText(QApplication::translate("MainWindow", "127.0.0.1", 0, QApplication::UnicodeUTF8));
+        connectButton->setText(QApplication::translate("MainWindow", "Connect", 0, QApplication::UnicodeUTF8));
+        disconnectButton->setText(QApplication::translate("MainWindow", "Disconnect", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

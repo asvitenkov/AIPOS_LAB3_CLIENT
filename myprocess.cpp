@@ -31,10 +31,11 @@ void myProcess::startProcess()
 * Посылает в процесс параметры для обработки
 * @param com команда, которую необходимо выполнить
 */
-void myProcess::runCommand(QString com)
+void myProcess::runCommand(QByteArray cmd)
 {
-        QString s=com+"\n";
-        if(myProc.write(s.toAscii())!=-1) qDebug()<<"OK";
+        //QString s=com+"\n";
+    cmd.push_back('\n');
+        if(myProc.write(cmd)!=-1) qDebug()<<"OK";
 }
 
 /**
@@ -45,6 +46,7 @@ void myProcess::showOutput()
     QString retStr;
     QTextCodec::setCodecForTr(QTextCodec::codecForName("CP866"));
     retStr = tr(myProc.readAllStandardOutput());
+    //myProc.
     emit output(retStr);
 }
 

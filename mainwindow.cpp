@@ -9,23 +9,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    TSession *session = new TSession(this);
-    session->initialization();
-    session->connectToHost(QHostAddress("127.0.0.1"),25,QIODevice::ReadWrite);
-    QByteArray answer;
-    answer+=255;
-    answer+=252;
-    answer+=31;
-    answer+=255;
-    answer+=254;
-    answer+=31;
-    session->write(answer);
-    TPrinter *tmp=new TPrinter(this);
-    ui->verticalLayout->addWidget(tmp);
-    tmp->show();
-    connect(session,SIGNAL(printMessageSignal(QByteArray)),tmp,SLOT(printMessageSlot(QByteArray)));
-    connect(tmp,SIGNAL(keyReleaseSignal(QKeyEvent*,QString)),session,SLOT(keyPressedOnKeyboard(QKeyEvent*,QString)));
-    connect(session,SIGNAL(escSeqSignal(QByteArray)),tmp,SLOT(parseEcsSeq(QByteArray)));
+    printer=new TPrinter(this);
+    ui->verticalLayout->addWidget(printer);
+    printer->show();
+    session = NULL;
+    connect(ui->connectButton,SIGNAL(clicked()),this,SLOT(createConnection()));
+    connect(ui->disconnectButton,SIGNAL(clicked()),this,SLOT(closeConnection()));
 }
 
 MainWindow::~MainWindow()
@@ -35,3 +24,35 @@ MainWindow::~MainWindow()
 
 
 
+
+void MainWindow::createConnection(){
+    if(session!=NULL){
+        session->close();
+        session->abort();
+        session->deleteLater();
+    }
+    printer->clear();
+    session = new TSession(this);
+    session->initialization();
+    session->connectToHost(QHostAddress(ui->serverAdress->text()),ui->serverPort->value(),QIODevice::ReadWrite);
+    connect(session,SIGNAL(printMessageSignal(QByteArray)),printer,SLOT(printMessageSlot(QByteArray)));
+    connect(printer,SIGNAL(keyReleaseSignal(QKeyEvent*,QString)),session,SLOT(keyPressedOnKeyboard(QKeyEvent*,QString)));
+    connect(session,SIGNAL(deleteChar()),printer,SLOT(deleteChar()));
+    connect(session,SIGNAL(disconnected()),this,SLOT(connectionClose()));
+}
+
+
+void MainWindow::connectionClose(){
+    qDebug()<<"con close";
+    printer->append(QString("Connection close"));
+}
+
+void MainWindow::closeConnection(){
+    if(session!=NULL){
+        session->close();
+        session->abort();
+        session->deleteLater();
+        session = NULL;
+    }
+    //printer->append(QString("Connection close"));
+}

@@ -25,12 +25,14 @@ public:
 signals:
     void printMessageSignal(QByteArray aMessage);
     void escSeqSignal(QByteArray aSeq);
+    void deleteChar();
 public slots:
     void keyPressedOnKeyboard(QKeyEvent *e, QString keyText);
 private slots:
 
     void readServer();
     void connectToServerSlot();
+    void commandProcessed(QString);
 
 
 private:
@@ -42,9 +44,9 @@ private:
     char lastChar;
     QByteArray outputData;
     QByteArray terminalType;
-    QByteArray& clearData(QByteArray &aData);
+    //QByteArray& clearData(QByteArray &aData);
     myProcess *prc;
-    void commandProcessed(QString);
+
 
 
 };

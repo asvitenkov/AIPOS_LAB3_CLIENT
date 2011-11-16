@@ -20,6 +20,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    TPrinter *printer;
+    TSession *session;
+
+private slots:
+    void createConnection();
+    void connectionClose();
+    void closeConnection();
 
 
 };
