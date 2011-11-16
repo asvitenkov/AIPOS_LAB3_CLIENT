@@ -47,6 +47,9 @@ void TPrinter::mouseMoveEvent(QMouseEvent *e){
 void TPrinter::printMessageSlot(QByteArray aMessage){
     qDebug()<<"TPrinter::printMessageSlot";
     this->textCursor().insertText(QString::fromLocal8Bit(aMessage));
+    QTextCursor curs = this->textCursor();
+    curs.movePosition(QTextCursor::End);
+    this->setTextCursor(curs);
     //parseEcsSeq(aMessage);
 }
 
