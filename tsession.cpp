@@ -14,20 +14,10 @@ void TSession::initialization(){
     terminalType.clear();
     memset(optionsState,CONST_OFF,sizeof(optionsState));
     for(int i=0;i<40;i++) optionsState[i] = CONST_OFF;
-    //optionsState[31]=CONST_OFF;
-    //optionsState[24]=CONST_OFF;
     optionsState[1]=OFF;
     optionsState[3]=CONST_ON;
     connect(this,SIGNAL(readyRead()),this,SLOT(readServer()));
     connect(this,SIGNAL(connected()),this,SLOT(connectToServerSlot()));
-
-
-    //prc = new myProcess;
-    //prc->startProcess();
-    //prc->runCommand();
-    //connect(prc,SIGNAL(output(QString)),this,SLOT(commandProcessed(QString)));
-
-
 }
 
 
@@ -35,15 +25,14 @@ void TSession::initialization(){
 void TSession::readServer(){
     QByteArray array=readAll();
     qDebug()<<QString::fromLocal8Bit(array);
-    //clearData(array);
     parseMessage(array);
 
 }
 
-void TSession::connectToServerSlot(){
-    qDebug()<<"TSession::connectToServerSlot()";
+//void TSession::connectToServerSlot(){
+//    qDebug()<<"TSession::connectToServerSlot()";
 
-}
+//}
 
 
 void TSession::parseMessage(QByteArray aMessage){
@@ -159,14 +148,6 @@ void TSession::parseOptions(QByteArray aOptions){
         break;
     }
     answer+=option;
-//    if(option==31){
-//        answer+=255;
-//        answer+=WONT;
-//        answer+=31;
-//        answer+=255;
-//        answer+=DONT;
-//        answer+=31;
-//    }
     write(answer);
 }
 
@@ -179,31 +160,6 @@ void TSession::keyPressedOnKeyboard(QKeyEvent *e, QString keyText){
 
 
 
-//QByteArray& TSession::clearData(QByteArray &aData){
-//    qDebug()<<"TSession::clearData";
-//    QByteArray array; array+=27;array+=91;
-//    int pos = aData.indexOf(array);
-//    while(pos!=-1){
-
-//        int posEndH=aData.indexOf('H',pos+1);
-//        int posEndJ=aData.indexOf('J',pos+1);
-//        int posEndM=aData.indexOf('m',pos+1);
-//        if (posEndH==-1)posEndH=aData.size()+1;
-//        if (posEndJ==-1)posEndJ=aData.size()+1;
-//        if (posEndM==-1)posEndM=aData.size()+1;
-//        int posEnd = qMin(qMin(posEndH,posEndJ),posEndM);
-//        QByteArray escSeq;
-//        escSeq= aData.mid(pos+2,posEnd-pos-1);
-//        aData.remove(pos,posEnd-pos+1);
-
-
-//        emit escSeqSignal(escSeq);
-//        pos = aData.indexOf(array);
-//    }
-//    return aData;
+//void TSession::commandProcessed(QString str){
+//    qDebug()<<str;
 //}
-
-
-void TSession::commandProcessed(QString str){
-    qDebug()<<str;
-}

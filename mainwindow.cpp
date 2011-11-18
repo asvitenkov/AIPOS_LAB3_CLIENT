@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     session = NULL;
     connect(ui->connectButton,SIGNAL(clicked()),this,SLOT(createConnection()));
     connect(ui->disconnectButton,SIGNAL(clicked()),this,SLOT(closeConnection()));
+    connect(ui->clearButton,SIGNAL(clicked()),printer,SLOT(clear()));
 }
 
 MainWindow::~MainWindow()

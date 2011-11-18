@@ -3,15 +3,23 @@
 #include <QCursor>
 #include <QTextCursor>
 #include <myprocess.h>
+#include <QFile>
+#include <QTextCodec>
+#include <QTextStream>
 
 TPrinter::TPrinter(QWidget *parent) :
     QTextEdit(parent)
 {
-    connect(this,SIGNAL(textChanged()),this,SLOT(textChangedSlot()));
-    this->setTextColor(Qt::white);
-    QPalette pal;
-    pal.setColor(QPalette::Base,Qt::black);
-    this->setPalette(pal);
+
+
+//    this->setTextColor(QColor(Qt::red));
+//    QPalette pal;
+//    pal.setColor(QPalette::Base,Qt::black);
+//    this->setPalette(pal);
+
+
+
+
 }
 
 void TPrinter::textChangedSlot(){
@@ -33,24 +41,23 @@ void TPrinter::keyReleaseEvent(QKeyEvent *e){
     qDebug()<<e->key();
 }
 
-void TPrinter::keyPressEvent(QKeyEvent *e){
-    //qDebug()<<"TPrinter::keyPressEvent";
-    //QTextEdit::keyPressEvent(e);
-}
-
-
-void TPrinter::mouseMoveEvent(QMouseEvent *e){
-    QTextEdit::mouseMoveEvent(e);
-}
 
 
 void TPrinter::printMessageSlot(QByteArray aMessage){
     qDebug()<<"TPrinter::printMessageSlot";
-    this->textCursor().insertText(QString::fromLocal8Bit(aMessage));
+    QString str;
+    if(!aMessage.isEmpty())
+        if(aMessage.at(0)==(char)8){
+            deleteChar();
+            return;
+        }
+    QTextCodec *codec = QTextCodec::codecForName("CP866");
+    str = codec->toUnicode(aMessage);
+    qDebug()<<str;
+    this->textCursor().insertText(str);
     QTextCursor curs = this->textCursor();
     curs.movePosition(QTextCursor::End);
     this->setTextCursor(curs);
-    //parseEcsSeq(aMessage);
 }
 
 
@@ -61,3 +68,7 @@ void TPrinter::printMessageSlot(QByteArray aMessage){
 void TPrinter::deleteChar(){
     this->textCursor().deletePreviousChar();
 }
+
+
+
+

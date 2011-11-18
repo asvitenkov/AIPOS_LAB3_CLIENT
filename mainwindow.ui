@@ -42,7 +42,7 @@
         <item>
          <widget class="QSpinBox" name="serverPort">
           <property name="value">
-           <number>25</number>
+           <number>23</number>
           </property>
          </widget>
         </item>
@@ -57,6 +57,13 @@
          <widget class="QPushButton" name="disconnectButton">
           <property name="text">
            <string>Disconnect</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="clearButton">
+          <property name="text">
+           <string>Clear</string>
           </property>
          </widget>
         </item>

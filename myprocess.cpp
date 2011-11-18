@@ -44,7 +44,7 @@ void myProcess::runCommand(QByteArray cmd)
 void myProcess::showOutput()
 {
     QString retStr;
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("CP866"));
+    //QTextCodec::setCodecForTr(QTextCodec::codecForName("CP866"));
     retStr = tr(myProc.readAllStandardOutput());
     //myProc.
     emit output(retStr);

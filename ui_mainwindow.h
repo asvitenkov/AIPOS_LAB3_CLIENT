@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed 16. Nov 23:28:19 2011
+** Created: Fri 18. Nov 12:09:05 2011
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -41,6 +41,7 @@ public:
     QSpinBox *serverPort;
     QPushButton *connectButton;
     QPushButton *disconnectButton;
+    QPushButton *clearButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
 
@@ -72,7 +73,7 @@ public:
 
         serverPort = new QSpinBox(centralWidget);
         serverPort->setObjectName(QString::fromUtf8("serverPort"));
-        serverPort->setValue(25);
+        serverPort->setValue(23);
 
         horizontalLayout->addWidget(serverPort);
 
@@ -85,6 +86,11 @@ public:
         disconnectButton->setObjectName(QString::fromUtf8("disconnectButton"));
 
         horizontalLayout->addWidget(disconnectButton);
+
+        clearButton = new QPushButton(centralWidget);
+        clearButton->setObjectName(QString::fromUtf8("clearButton"));
+
+        horizontalLayout->addWidget(clearButton);
 
 
         verticalLayout->addLayout(horizontalLayout);
@@ -112,6 +118,7 @@ public:
         serverAdress->setText(QApplication::translate("MainWindow", "127.0.0.1", 0, QApplication::UnicodeUTF8));
         connectButton->setText(QApplication::translate("MainWindow", "Connect", 0, QApplication::UnicodeUTF8));
         disconnectButton->setText(QApplication::translate("MainWindow", "Disconnect", 0, QApplication::UnicodeUTF8));
+        clearButton->setText(QApplication::translate("MainWindow", "Clear", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
